@@ -1,30 +1,15 @@
----
-- name: Create EC2 Instance
-  hosts: localhost
-  gather_facts: False
-  tasks:
-    - name: Launch EC2 Instance
-      ec2:
-        key_name: vprofile-key
-        instance_type: t2.micro
-        image: ami-0f599bbc07afc299a  # Replace with your desired AMI ID
-        wait: yes
-        count: 1
-        subnet_id: subnet-071329f92dfb48bc5
-        assign_public_ip: yes
-        security_groups:
-          - ansible-sg  # Replace with your security group name
-      register: ec2_info
 
-    - name: Wait for SSH to become available
-      wait_for:
-        host: "{{ ec2_info.instances[0].public_ip }}"
-        port: 22
-        delay: 60
-        timeout: 320
-        state: started
-
-    - name: Print Public IP
-      debug:
-        var: ec2_info.instances[0].public_ip
+- name: start an instance with a public IP address
+  amazon.aws.ec2_instance:
+    name: "public-compute-instance"
+    key_name: "vprofile-key"
+#    vpc_subnet_id: subnet-5ca1ab1e
+    vpc_subnet_id: subnet-071329f92dfb48bc5
+    instance_type: t2.micro
+    security_group: default
+    network:
+      assign_public_ip: true
+    image_id: ami-0f599bbc07afc299a
+    tags:
+      Environment: Testing
 
