@@ -1,6 +1,6 @@
 - name: Start an instance with a public IP address
-  hosts: localhost  # Assuming you are running this playbook on your local machine
-  gather_facts: false  # Disable facts gathering for this example
+  hosts: localhost
+  gather_facts: false
 
   tasks:
     - name: Launch EC2 instance
@@ -14,8 +14,7 @@
           assign_public_ip: true
         image_id: ami-0f599bbc07afc299a
         tags:
-          - key: Environment
-            value: Testing
+          Environment: Testing
       register: ec2_instance
 
     - name: Debug information
