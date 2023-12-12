@@ -53,7 +53,7 @@
         image: "{{ bastion_ami }}"
         wait: yes
         wait_timeout: 300
-        instance_tags:
+        tags:
           - key: Name
             value: "Bastion_Host"
           - key: Project
@@ -61,13 +61,6 @@
           - key: Owner
             value: Devops Team
         exact_count: 1
-        count_tag:
-          - key: Name
-            value: "Bastion_Host"
-          - key: Project
-            value: Vprofile
-          - key: Owner
-            value: Devops Team
         group_id: "{{ BastionSG_out.group_id }}"
         vpc_subnet_id: "{{ pubsub1id }}"
       register: bastionHost_out
