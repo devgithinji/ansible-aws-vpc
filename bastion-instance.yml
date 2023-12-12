@@ -1,7 +1,7 @@
 - name: Setup vprofile bastion host
   hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: false
   tasks:
     - name: Import VPC setup variable
       include_vars: vars/bastion_setup
@@ -16,7 +16,7 @@
       register: key_out
 
     - name: Save private key into file bastion-key.pem
-      copy:
+      ansible.builtin.copy:
         content: "{{key_out.key.private_key}}"
         dest: "./bastion-key.pem"
         mode: 0600
