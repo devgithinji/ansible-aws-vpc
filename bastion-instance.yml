@@ -17,7 +17,7 @@
       register: key_out
 
     - name: Save private key into file bastion-key.pem
-      ansible.builtin.copy:
+      copy:
         content: "{{key_out.key.private_key}}"
         dest: "./bastion-key.pem"
         mode: 0600
@@ -47,8 +47,6 @@
 
     - name: Creating bastion host
       ec2:
-        aws_access_key: .....
-        aws_secret_key: ....
         key_name: vprofile-key
         region: "{{region}}"
         instance_type: t2.micro
