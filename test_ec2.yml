@@ -4,7 +4,7 @@
   gather_facts: False
   tasks:
     - name: Launch EC2 Instance
-      ec2_instance:
+      ec2:
         key_name: vprofile-key
         instance_type: t2.micro
         image: ami-0f599bbc07afc299a  # Replace with your desired AMI ID
@@ -13,8 +13,17 @@
         assign_public_ip: yes
         security_groups:
           - ansible-sg  # Replace with your security group name
-      register: ec2
+      register: ec2_info
+
+    - name: Wait for SSH to become available
+      wait_for:
+        host: "{{ ec2_info.instances[0].public_ip }}"
+        port: 22
+        delay: 60
+        timeout: 320
+        state: started
 
     - name: Print Public IP
       debug:
-        var: ec2.instances[0].public_ip
+        var: ec2_info.instances[0].public_ip
+
