@@ -1,15 +1,23 @@
+- name: Start an instance with a public IP address
+  hosts: localhost  # Assuming you are running this playbook on your local machine
+  gather_facts: false  # Disable facts gathering for this example
 
-- name: start an instance with a public IP address
-  amazon.aws.ec2_instance:
-    name: "public-compute-instance"
-    key_name: "vprofile-key"
-#    vpc_subnet_id: subnet-5ca1ab1e
-    vpc_subnet_id: subnet-071329f92dfb48bc5
-    instance_type: t2.micro
-    security_group: default
-    network:
-      assign_public_ip: true
-    image_id: ami-0f599bbc07afc299a
-    tags:
-      Environment: Testing
+  tasks:
+    - name: Launch EC2 instance
+      amazon.aws.ec2_instance:
+        name: "public-compute-instance"
+        key_name: "vprofile-key"
+        vpc_subnet_id: subnet-071329f92dfb48bc5
+        instance_type: t2.micro
+        security_group: default
+        network:
+          assign_public_ip: true
+        image_id: ami-0f599bbc07afc299a
+        tags:
+          - key: Environment
+            value: Testing
+      register: ec2_instance
 
+    - name: Debug information
+      debug:
+        var: ec2_instance
