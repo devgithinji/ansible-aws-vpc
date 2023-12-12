@@ -10,6 +10,7 @@
         image: ami-0f599bbc07afc299a  # Replace with your desired AMI ID
         wait: yes
         count: 1
+        subnet_id: subnet-071329f92dfb48bc5
         assign_public_ip: yes
         security_groups:
           - ansible-sg  # Replace with your security group name
