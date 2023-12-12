@@ -36,6 +36,14 @@
             cidr_ip: "{{MYIP}}"
       register: BastionSG_out
 
+    - name: Print Variables
+      debug:
+        var: "{{ item }}"
+        with_items:
+          - region
+          - bastion_ami
+          - BastionSG_out
+          - pubsub1id
 
     - name: Creating bastion host
       ec2:
