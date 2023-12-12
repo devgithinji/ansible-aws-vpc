@@ -4,8 +4,8 @@
 
   tasks:
     - name: Launch EC2 instance
-      amazon.aws.ec2_instance:
-        name: "public-compute-instance"
+      ec2:
+        name: "public-compute-instance two"
         key_name: "vprofile-key"
         vpc_subnet_id: subnet-071329f92dfb48bc5
         instance_type: t2.micro
