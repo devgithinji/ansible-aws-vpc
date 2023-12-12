@@ -39,11 +39,11 @@
     - name: Print Variables
       debug:
         var: "{{ item }}"
-        with_items:
-          - region
-          - bastion_ami
-          - BastionSG_out
-          - pubsub1id
+      with_items:
+        - region
+        - bastion_ami
+        - BastionSG_out
+        - pubsub1id
 
     - name: Creating bastion host
       ec2:
