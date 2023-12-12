@@ -36,15 +36,6 @@
             cidr_ip: "{{MYIP}}"
       register: BastionSG_out
 
-    - name: Print Variables
-      debug:
-        var: "{{ item }}"
-      with_items:
-        - region
-        - bastion_ami
-        - BastionSG_out
-        - pubsub1id
-
     - name: Launch EC2 instance
       amazon.aws.ec2_instance:
         key_name: vprofile-key
