@@ -5,7 +5,7 @@
   become: False
   tasks:
     - name: Import VPC setup variable
-      include_vars: vars/bastion_setup
+      include_vars: vars/vpc_setup
 
     - name: Import VPC setup variable
       include_vars: vars/output_vars
@@ -53,7 +53,10 @@
         vpc_subnet_id: "{{ pubsub1id }}"
       register: bastionHost_out
 
-    - name: Print Debug Info - Bastion Host Output
-      debug:
-        var: bastionHost_out
+    - name: Insert/Update "BastionSGid" in vars/output_vars
+      blockinfile:
+        path: vars/output_vars
+        backup: yes
+        block: |
+          BastionSGid: {{BastionSG_out.group_id}}
 
