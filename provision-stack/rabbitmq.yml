@@ -9,7 +9,7 @@
       tags:
         - package
 
-    - name: Adding an Erlang Solution public key
+    - name: Add an Erlang Solution public Key
       apt_key:
         url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
         state: present
@@ -22,6 +22,8 @@
         update_cache: yes
         cache_valid_time: 86400
         state: present
+      tags:
+        - package
 
     - name: Add an Apt signing key, uses whichever key is at the URL
       apt_key:
@@ -44,6 +46,7 @@
       tags:
         - package
 
+
     - name: Start & Enable RMQ
       service:
         name: rabbitmq-server
@@ -55,12 +58,13 @@
     - name: Config setup
       copy:
         content: |
-          [{rabbit, [{loopback_users,[]}]}].
+          [{rabbit, [{loopback_users, []}]}].
         dest: /etc/rabbitmq/rabbitmq.config
       notify:
-        -Restart RMQ
+        - Restart RMQ
       tags:
         - conf
+
 
     - rabbitmq_user:
         user: test
@@ -74,6 +78,7 @@
         - Restart RMQ
       tags:
         - conf
+
 
     - name: Enables the rabbitmq_management plugin
       rabbitmq_plugin:
