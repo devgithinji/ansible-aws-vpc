@@ -3,7 +3,7 @@
   hosts: dbsrvgrp
   gather_facts: no
   tasks:
-    - name: Installing Mysql service and dependancies
+    - name: Installing Mysql Service and dependencies
       package:
         name: "{{item}}"
         state: present
@@ -35,6 +35,7 @@
         host: '%'
         state: present
 
+
     - name: Creating accounts DB
       mysql_db:
         name: "{{dbname}}"
@@ -47,12 +48,12 @@
         line: 'bind-address = 0.0.0.0'
         backup: yes
       notify:
-        - restart mysql
+        - Restart mysql
       tags:
         - conf
-        -
+
   handlers:
-      - name: Restart mysql
-        service:
-          name: mysql
-          state: restarted
+    - name: Restart mysql
+      service:
+        name: mysql
+        state: restarted
